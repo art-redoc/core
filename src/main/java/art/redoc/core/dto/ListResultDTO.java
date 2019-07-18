@@ -1,7 +1,7 @@
 package art.redoc.core.dto;
 
 import art.redoc.core.conts.ApiResultCode;
-import art.redoc.core.exceptions.CustomRuntimeException;
+import art.redoc.core.exceptions.CoreRuntimeException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,13 +24,13 @@ public class ListResultDTO<T> extends AbstractResultDTO {
     public ListResultDTO() {
     }
 
-    ListResultDTO(final String code) {
-        this.code = code;
+    ListResultDTO(final String apiResultCode) {
+        this.apiResultCode = apiResultCode;
     }
 
     public static <T> ListResultDTO<T> success(final List<T> listData) {
         if (listData == null) {
-            throw new CustomRuntimeException("500", "NullPointerException",
+            throw new CoreRuntimeException("500", "NullPointerException",
                     "The formal parameter 'listData' cannot be null");
         }
 
@@ -39,10 +39,10 @@ public class ListResultDTO<T> extends AbstractResultDTO {
         return result;
     }
 
-    public static <T> ListResultDTO<T> failure(final List<T> listData, final ResultError... errors) {
+    public static <T> ListResultDTO<T> failure(final List<T> listData, final ResultError error) {
         final ListResultDTO<T> result = new ListResultDTO<>(ApiResultCode.FAILED_STATUS);
         result.setData(listData);
-        result.setErrors(errors);
+        result.setError(error);
         return result;
     }
 }

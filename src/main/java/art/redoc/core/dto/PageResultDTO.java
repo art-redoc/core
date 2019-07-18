@@ -1,7 +1,7 @@
 package art.redoc.core.dto;
 
 import art.redoc.core.conts.ApiResultCode;
-import art.redoc.core.exceptions.CustomRuntimeException;
+import art.redoc.core.exceptions.CoreRuntimeException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.domain.Page;
@@ -32,13 +32,13 @@ public class PageResultDTO<T> extends ListResultDTO<T> {
     public PageResultDTO() {
     }
 
-    public PageResultDTO(final String code) {
-        super(code);
+    public PageResultDTO(final String apiResultCode) {
+        super(apiResultCode);
     }
 
     public static <T> PageResultDTO<T> success(final Page<T> pageData) {
         if (pageData == null) {
-            throw new CustomRuntimeException("500", "NullPointerException",
+            throw new CoreRuntimeException("500", "NullPointerException",
                     "The formal parameter 'pageData' cannot be null");
         }
 
@@ -50,7 +50,7 @@ public class PageResultDTO<T> extends ListResultDTO<T> {
 
     public static <T> PageResultDTO<T> success(final List<T> listData, final Page<?> pageData) {
         if (pageData == null) {
-            throw new CustomRuntimeException("500", "NullPointerException",
+            throw new CoreRuntimeException("500", "NullPointerException",
                     "The formal parameter 'pageData' cannot be null");
         }
 

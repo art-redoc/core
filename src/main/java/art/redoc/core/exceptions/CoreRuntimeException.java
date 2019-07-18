@@ -1,35 +1,37 @@
 package art.redoc.core.exceptions;
 
-public class CustomRuntimeException extends RuntimeException {
+import art.redoc.core.conts.ApiResultCode;
+
+public class CoreRuntimeException extends RuntimeException {
     private static final long serialVersionUID = 7028619727249732142L;
     private final String code;
     private Object[] params;
 
-    public CustomRuntimeException() {
-        this.code = "101";
+    public CoreRuntimeException() {
+        this.code = ApiResultCode.FAILED_STATUS;
     }
 
-    public CustomRuntimeException(final String code) {
+    public CoreRuntimeException(final String code) {
         this.code = code;
     }
 
-    public CustomRuntimeException(final String code, final Object... params) {
-        this.code = code;
-        this.params = params;
-    }
-
-    public CustomRuntimeException(final String code, final String defaultMessage) {
-        super(defaultMessage);
-        this.code = code;
-    }
-
-    public CustomRuntimeException(final String code, final String defaultMessage, final Object... params) {
-        super(defaultMessage);
+    public CoreRuntimeException(final String code, final Object... params) {
         this.code = code;
         this.params = params;
     }
 
-    public CustomRuntimeException(final String code, final String defaultMessage, final Throwable cause) {
+    public CoreRuntimeException(final String code, final String defaultMessage) {
+        super(defaultMessage);
+        this.code = code;
+    }
+
+    public CoreRuntimeException(final String code, final String defaultMessage, final Object... params) {
+        super(defaultMessage);
+        this.code = code;
+        this.params = params;
+    }
+
+    public CoreRuntimeException(final String code, final String defaultMessage, final Throwable cause) {
         super(defaultMessage, cause);
         this.code = code;
     }

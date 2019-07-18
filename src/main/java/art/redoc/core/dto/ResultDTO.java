@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class ResultDTO<T> extends AbstractResultDTO {
 
     @JsonProperty(value = "data", index = 2)
@@ -19,8 +18,8 @@ public class ResultDTO<T> extends AbstractResultDTO {
     public ResultDTO() {
     }
 
-    public ResultDTO(final String code) {
-        this.code = code;
+    public ResultDTO(final String apiResultCode) {
+        this.apiResultCode = apiResultCode;
     }
 
     public static ResultDTO<Void> success() {
@@ -28,8 +27,8 @@ public class ResultDTO<T> extends AbstractResultDTO {
         return result;
     }
 
-    public static <T> ResultDTO<T> success(final String code, final T data) {
-        final ResultDTO<T> result = new ResultDTO<>(code);
+    public static <T> ResultDTO<T> success(final String apiResultCode, final T data) {
+        final ResultDTO<T> result = new ResultDTO<>(apiResultCode);
         result.setData(data);
         return result;
     }
@@ -45,16 +44,16 @@ public class ResultDTO<T> extends AbstractResultDTO {
         return result;
     }
 
-    public static ResultDTO<Void> failure(final ResultError... errors) {
+    public static ResultDTO<Void> failure(final ResultError error) {
         final ResultDTO<Void> result = new ResultDTO<>(ApiResultCode.FAILED_STATUS);
-        result.setErrors(errors);
+        result.setError(error);
         return result;
     }
 
-    public static <T> ResultDTO<T> failure(final T data, final ResultError... errors) {
+    public static <T> ResultDTO<T> failure(final T data, final ResultError error) {
         final ResultDTO<T> result = new ResultDTO<>(ApiResultCode.FAILED_STATUS);
         result.setData(data);
-        result.setErrors(errors);
+        result.setError(error);
         return result;
     }
 }

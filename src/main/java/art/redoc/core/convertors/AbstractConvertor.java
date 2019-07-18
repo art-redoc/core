@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Model
+ * Abstract convertor, the default params {@code forListView} is false.
+ *
  */
 public abstract class AbstractConvertor<Model, DTO> {
 
@@ -30,8 +31,7 @@ public abstract class AbstractConvertor<Model, DTO> {
     }
 
     public final List<DTO> toListDTO(final List<Model> modelList) {
-        final List<DTO> dtoList = modelList.stream().map(model -> this.toDTO(model, true)).collect(Collectors.toList());
-        return dtoList;
+        return toListDTO(modelList, false);
     }
 
     public final List<DTO> toListDTO(List<Model> modelList, boolean forListView) {
@@ -40,11 +40,7 @@ public abstract class AbstractConvertor<Model, DTO> {
     }
 
     public final Page<DTO> toPageDTO(final Page<Model> modelPage) {
-        final List<Model> modelList = modelPage.getContent();
-        final List<DTO> dtoList = this.toListDTO(modelList);
-        final long totalElements = modelPage.getTotalElements();
-        final Page<DTO> dtoPage = new PageImpl<>(dtoList, this.getPageable(modelPage), totalElements);
-        return dtoPage;
+        return toPageDTO(modelPage, false);
     }
 
     public final Page<DTO> toPageDTO(final Page<Model> modelPage, boolean forListView) {
@@ -56,9 +52,7 @@ public abstract class AbstractConvertor<Model, DTO> {
     }
 
     public final ResultDTO<DTO> toResultDTO(final Model model) {
-        final DTO dto = (model == null) ? null : this.toDTO(model);
-        final ResultDTO<DTO> resultDTO = ResultDTO.success(dto);
-        return resultDTO;
+        return toResultDTO(model, false);
     }
 
     public final ResultDTO<DTO> toResultDTO(final Model model, boolean forListView) {
@@ -68,9 +62,7 @@ public abstract class AbstractConvertor<Model, DTO> {
     }
 
     public final ListResultDTO<DTO> toResultDTO(final List<Model> modelList) {
-        final List<DTO> dtoList = this.toListDTO(modelList);
-        final ListResultDTO<DTO> resultDTO = ListResultDTO.success(dtoList);
-        return resultDTO;
+        return toResultDTO(modelList, false);
     }
 
     public final ListResultDTO<DTO> toResultDTO(final List<Model> modelList, boolean forListView) {
@@ -80,9 +72,7 @@ public abstract class AbstractConvertor<Model, DTO> {
     }
 
     public final PageResultDTO<DTO> toResultDTO(final Page<Model> modelPage) {
-        final List<DTO> dtoList = this.toListDTO(modelPage.getContent());
-        final PageResultDTO<DTO> resultDTO = PageResultDTO.success(dtoList, modelPage);
-        return resultDTO;
+        return toResultDTO(modelPage, false);
     }
 
     public final PageResultDTO<DTO> toResultDTO(final Page<Model> modelPage, boolean forListView) {

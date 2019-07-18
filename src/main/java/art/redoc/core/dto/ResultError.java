@@ -1,47 +1,35 @@
 package art.redoc.core.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ResultError {
 
     /**
-     * 错误信息
+     * Err msg.
      */
-    private String errmsg;
+    private String errMsg;
     /**
-     * 错误编码
+     * Err code.
      */
-    private String errcode;
+    private String errCode;
 
     public ResultError() {
     }
 
-    public ResultError(final String errmsg) {
-        this.errmsg = errmsg;
+    public ResultError(final String errMsg) {
+        this.errMsg = errMsg;
     }
 
-    public ResultError(final String errcode, final String errmsg) {
-        this.errcode = errcode;
-        this.errmsg = errmsg;
-    }
-
-    public String getErrmsg() {
-        return this.errmsg;
-    }
-
-    public String getErrcode() {
-        return this.errcode;
-    }
-
-    public void setErrcode(final String errcode) {
-        this.errcode = errcode;
-    }
-
-    public void setErrmsg(final String errmsg) {
-        this.errmsg = errmsg;
+    public ResultError(final String errCode, final String errMsg) {
+        this.errCode = errCode;
+        this.errMsg = errMsg;
     }
 
     @Override
     public String toString() {
-        return String.format("{errcode:%s, errmsg:%s}", this.errcode, this.errmsg);
+        return String.format("{errCode:%s, errMsg:%s}", this.errCode, this.errMsg);
     }
-
 }

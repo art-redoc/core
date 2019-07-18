@@ -12,50 +12,48 @@ import lombok.extern.slf4j.Slf4j;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class AbstractResultDTO {
     /**
-     * 状态
+     * Error code.
      */
     @Getter
     @Setter
     @JsonProperty(value = "code", index = 0)
-    protected String code;
+    protected String apiResultCode;
 
     /**
-     * 错误信息
+     * Error detail.
      */
-    protected ResultError[] errors;
+    protected ResultError error;
 
     @JsonIgnore
     public boolean isSuccess() {
-        return this.code.equals(ApiResultCode.SUCCESSFUL_STATUS) ? true : false;
+        return this.apiResultCode.equals(ApiResultCode.SUCCESSFUL_STATUS) ? true : false;
     }
 
     @JsonIgnore
     public boolean isFailure() {
-        return this.code.equals(ApiResultCode.SUCCESSFUL_STATUS) ? false : true;
+        return this.apiResultCode.equals(ApiResultCode.SUCCESSFUL_STATUS) ? false : true;
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonProperty(value = "errors", index = 1)
-    public ResultError[] getErrors() {
-        return this.errors;
+    @JsonProperty(value = "error", index = 1)
+    public ResultError getError() {
+        return this.error;
     }
 
-    protected void setErrors(final ResultError... errors) {
-        this.errors = errors;
+    protected void setError(final ResultError error) {
+        this.error = error;
     }
 
     @JsonIgnore
-    public String errorsToString() {
-        if ((this.errors != null) && (this.errors.length > 0)) {
+    public String errorToString() {
+        if ((this.error != null)) {
             final StringBuilder builder = new StringBuilder();
-            builder.append("Errors : [");
-            for (final ResultError error : this.errors) {
-                builder.append(error.toString());
-            }
+            builder.append("Error : [");
+            builder.append(this.error.toString());
             builder.append("]");
             return builder.toString();
         } else {
-            return "errors : []";
+            return "error : []";
         }
     }
 }
